@@ -1,0 +1,112 @@
+.menber_box {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  .menber_box_log {
+    width: 100%;
+    background: #fff;
+    padding: .5rem 1rem;
+    box-sizing: border-box;
+    margin-bottom: .5rem;
+    &:nth-last-child(1) {
+      margin-bottom: 0;
+    }
+
+    > .menber_box_log_top {
+      height: 6rem;
+      width: 100%;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      &.bor_btm_no{
+        border: none;
+      }
+      /*头像*/
+      >.menber_box_log_top_l{
+        width: 4.5rem;
+        height: 100%;
+        padding-top: .5rem;
+        box-sizing: border-box;
+        >span{
+          display: inline-block;
+          width: 100%;
+          height: 4.5rem;
+          background: url("../assets/user_icon_phto.png") no-repeat center;
+          background-size: 100%;
+        }
+      }
+      /*个人信息*/
+      >.menber_box_log_top_r{
+        width: calc(100% - 4.5rem);
+        padding-left: .5rem;
+
+        >.menber_box_log_top_r_t{
+          height: 2rem;
+          line-height: 2rem;
+          display: flex;
+          justify-content: space-between;
+          >p{
+            font-size:1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color:rgba(102,102,102,1);
+            &:nth-child(1){
+              font-size: 1.3rem;
+              color: #222222;
+            }
+          }
+        }
+
+        >.menber_box_log_top_r_b{
+          height: 3rem;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          >.menber_box_log_top_r_b_l{
+            >p{
+              height:1.5rem;
+              line-height: 1.5rem;
+              font-size:1rem;
+              color:rgba(102,102,102,1);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              >span{
+                margin-left: 2rem;
+              }
+            }
+          }
+          >.menber_box_log_top_r_b_r{
+            >p{
+              padding: 0 .5rem ;
+              height:2.25rem;
+              line-height: 2.25rem;
+              text-align: center;
+              background:rgba(138,148,168,1);
+              border-radius:.5rem;
+              color:rgba(255,255,255,1);
+              &.revoke_color{
+                background:rgba(167,178,182,1);
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+    > .menber_box_log_bottom {
+      height: 5rem;
+      padding-top: .5rem;
+      box-sizing: border-box;
+      width: 100%;
+      line-height: 2rem;
+      color:rgba(102,102,102,1);
+      font-size: 1rem;
+      >div{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
