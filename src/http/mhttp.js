@@ -12,8 +12,8 @@ if (location.origin.indexOf('http://localhost:') >= 0) {
   reg_api = '//i.hjtz.com/mobile';
   token = 'p6glf1v2w4my5nmr3t28krznodq1goif';
   mark = '7642e0098e812f79e67d161fbf0c7ae5';
-  // token = 'eh0di3jmbxpqkbnsnojqvv9sxll2l452';
-  // mark = '3d36e8f50a86219200663e6396a66146';
+  // token = 'lzfs8831u1alaiyrgafudsorlh37fv38';
+  // mark = 'cbc4ecc3eae377e91b9196460fdbb645';
 } else {
   api = '/api';
   reg_api = '/mobile';
@@ -39,7 +39,7 @@ axios.interceptors.response.use(response => {
   }
 );
 
-
+//封装的axios post请求
 export function post(url, data = {}) {
   url = api + url;
   data['token'] = token;
@@ -56,6 +56,7 @@ export function post(url, data = {}) {
   })
 }
 
+//封装注册时使用的axios post请求
 export function reg_post(url, data = {}) {
   url = reg_api + url;
   data['language'] = fun.getCookie('odrthink_language') || 'zh-tw';

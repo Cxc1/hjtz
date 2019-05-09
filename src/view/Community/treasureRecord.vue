@@ -47,15 +47,22 @@
     },
     data() {
       return {
+        //加载数据bol值
         loadBol: true,
+        //默认加载第一页
         page: 1,
+        //一页加载15条
         rows: 15,
+        //列表数据
         userbcblist: [],
+        //控制没有数据页面的显示隐藏
         noDataShow: false,
       }
     },
     created() {
+      //获取挖矿记录方法调用
       this.getuserbcblist();
+
     },
     methods: {
       //上拉加载
@@ -63,7 +70,7 @@
         this.page++;
         this.getuserbcblist();
       },
-      //获取挖矿记录
+      //获取挖矿记录方法
       getuserbcblist() {
         this.$loading.open();
         this.loadBol = true;
@@ -90,6 +97,7 @@
 </script>
 
 <style lang="less" scoped>
+  /*没有数据时显示的页面*/
   .not_data {
     background: #fff;
     display: flex;

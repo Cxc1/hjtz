@@ -29,8 +29,8 @@
           <div class="lock_grade_lg_icon">
             <span class="lock_grade_lg_icon_two"></span>
           </div>
-          <div class="lock_grade_lg_content">{{$t('content_text.lang_list_24')}}： LV {{init_data.zhitui_level}}</div>
-          <router-link tag="div" to="/comLevel" class="lock_grade_lg_r" >
+          <div class="lock_grade_lg_content">{{$t('content_text.lang_list_24')}}： LV {{init_data.share_level}}</div>
+          <router-link tag="div" to="/comLevel" class="lock_grade_lg_r">
             {{$t('content_text.lang_list_39')}}
           </router-link>
         </div>
@@ -38,6 +38,7 @@
       </div>
       <!--奖励-->
       <div class="reward">
+        <!--基础奖励-->
         <router-link tag="div" to="/receiveAwards?type=1" class="reward_item">
           <div class="reward_item_icon">
             <span class="reward_item_icon_one"></span>
@@ -50,6 +51,7 @@
             <span></span>
           </div>
         </router-link>
+        <!--分享奖励-->
         <router-link tag="div" to="/receiveAwards?type=2" class="reward_item">
           <div class="reward_item_icon">
             <span class="reward_item_icon_two"></span>
@@ -62,6 +64,7 @@
             <span></span>
           </div>
         </router-link>
+        <!--直推奖励-->
         <router-link tag="div" to="/receiveAwards?type=3" class="reward_item">
           <div class="reward_item_icon">
             <span class="reward_item_icon_st"></span>
@@ -89,9 +92,9 @@
       </router-link>
 
       <!--一键领取奖励-->
-       <div class="get_btn " :class="{active:init_data.income_status != 1}" @click="showCaptcha">{{get_btn_txt}}</div>
+      <div class="get_btn " :class="{active:init_data.income_status != 1}" @click="showCaptcha">{{get_btn_txt}}</div>
       <!--激活会员-->
-      <router-link tag="div" to="/actMembers" class="get_btn">{{$t('content_text.lang_list_3')}}</router-link>
+      <!--<router-link tag="div" to="/actMembers"  class="get_btn">{{$t('content_text.lang_list_3')}}</router-link>-->
     </div>
 
   </div>
@@ -125,8 +128,11 @@
     },
 
     methods: {
+      //初始数据
       getCommunityInit() {
+
         this.$loading.open();
+
         this.$post('/Money/IGKCommunityInit').then(res => {
           if (res.code == 10000) {
             this.init_data = res.result;
@@ -144,9 +150,10 @@
           confirmButtonText: this.$t('msgs.confirm'),
         })
       },
+      //调用易盾滑动验证
       showCaptcha() {
         if (this.init_data.income_status == 1) {
-        this.captchaIns.popUp();
+          this.captchaIns.popUp();
         }
       }
     },

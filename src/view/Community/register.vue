@@ -80,6 +80,7 @@
     components: {},
     data() {
       return {
+        //
         selectBol: false,
         sele_tBol: true,
         wayBol: true,

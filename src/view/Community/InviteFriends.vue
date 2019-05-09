@@ -39,8 +39,10 @@
     },
     data() {
       return {
+
         token: '',
         mark: '',
+
         src_api: '',
         message: '',//链接
         user_info: '',

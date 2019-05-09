@@ -27,6 +27,7 @@
           this.$route.name === 'reg_ag' ||
           this.$route.name === 'treasureRecord' ||
           this.$route.name === 'myFriends' ||
+          this.$route.name === 'chat' ||
           this.$route.name === 'detail') {
           if (this.$route.name === 'reg_ag') {
             if (this.$route.query.type == 'h5') {

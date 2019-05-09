@@ -13,14 +13,27 @@
       <ul v-else class="menber_box"
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loadBol"
-          infinite-scroll-distance="0"
-      >
+          infinite-scroll-distance="0">
         <li class="myfrends_list" v-for="(item, index) in myMemberList" :key="item.id">
           <div class="myfrends_list_left">
             <img src="../../assets/user_icon_phto.png" alt="">
           </div>
           <div class="myfrends_list_right">
-            <p>{{$t('content_text.lang_list_10')}}：{{item.user_mobile}}</p>
+            <p>
+              <span>
+                {{$t('content_text.lang_list_10')}}：{{item.user_mobile}}
+              </span>
+              <span class="myfrends_list_right_btn" v-if="item.is_join==1">
+                {{$t('btnTxt.lang_list_130')}}
+              </span>
+              <span class="myfrends_list_right_btn is_btn" v-if="item.is_join==2"
+                    @click="invite_join_community(item.user_id)">
+                {{$t('btnTxt.lang_list_128')}}
+              </span>
+              <span class="myfrends_list_right_btn" v-if="item.is_join==3">
+                {{$t('btnTxt.lang_list_129')}}
+              </span>
+            </p>
             <p class="join_time">
               <span>ID：{{item.user_id}}</span>
               <span>{{$t('content_text.lang_list_89')}}：{{item.user_reg_time}}</span>
@@ -34,6 +47,7 @@
 
 <script>
   import Header from '@/components/Header.vue'
+  import {Toast} from 'mint-ui';
 
   export default {
     name: "myFriends",
@@ -47,6 +61,7 @@
         p: 1,
         ps: 0,
         myMember_noData_show: true,
+        list_right_btn_Txt: '',
       }
     },
     created() {
@@ -76,6 +91,18 @@
             if (res.result.list.length >= 10) {
               this.loadBol = false;
             }
+          }
+          this.$loading.close();
+        })
+      },
+      invite_join_community(id) {
+        this.$loading.open();
+        this.$post('/Money/inviteFriendJoinCommunity', {user_id: id}).then(res => {
+          if (res.code == 10000) {
+            Toast(this.$t('msgs.lang_list_131'));
+            this.p = 1;
+            this.myMemberList = [];
+            this.getCommunityMemberList();
           }
           this.$loading.close();
         })
@@ -128,10 +155,26 @@
     float: left;
     width: calc(100% - 6.5rem);
     padding-left: 1.5rem;
-    padding-top: 1rem;
     color: #666666;
     font-size: 1rem;
-    .join_time {
+    > p {
+      &:nth-child(1) {
+        height: 2.5rem;
+        line-height: 2.5rem;
+        > span {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        > .myfrends_list_right_btn.is_btn {
+          background: #F7A003;
+          padding: 0 1rem;
+          border-radius: 3px;
+          color: #fff;
+          font-size: 1.2rem;
+        }
+      }
       display: flex;
       justify-content: space-between;
       padding-top: 0.2rem;

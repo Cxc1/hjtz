@@ -42,7 +42,12 @@
                     <p>{{$t('content_text.lang_list_67')}}：{{item.rate}}%</p>
                     <p>{{$t('content_text.lang_list_98')}}：{{item.fee_value}}IGK</p>
                   </div>
-                  <div class="awards_record_list_r_b_r">+{{item.actual_money}} IGK</div>
+                  <div class="awards_record_list_r_b_r">
+                    <p v-if="item.status != 1">+{{item.actual_money}} IGK</p>
+                    <p v-else>+{{item.money}} IGK</p>
+                    <p class="awards_record_list_r_b_r_btn" v-if="item.status == 1" @click="incomeOnesReceive(item.id)">
+                      {{$t('content_text.lang_list_133')}}</p>
+                  </div>
                 </div>
               </div>
             </li>
@@ -82,20 +87,26 @@
         record_url: '',
         //領取獎勵接口地址
         income_url: '',
+        //补领奖励接口地址
+        single_id: '',
         //初始數據
         init_data: [],
         //領取記錄
         record_list: [],
-        //按鈕狀態
+        //按鈕狀態文字
         btn_txt: '',
-
+        //按鈕狀態
         status: false,
+
         p: 1,
+
         ps: 10,
-        //
+        //是否有数据
         DataShow: true,
         //易盾驗證
         captchaIns: '',
+
+        income_type: '',
       };
     },
     created() {
@@ -134,7 +145,13 @@
           onVerify(err, data) {
             if (!err) {
               self.captchaIns.refresh();
-              self.$post(self.income_url, {validate: data.validate}).then(res => {
+              let vali_obj = self.income_type == 1 ? {validate: data.validate} : {
+                validate: data.validate,
+                id: self.single_id,
+                type: self.income_type
+              };
+
+              self.$post(self.income_url, vali_obj).then(res => {
                 if (res.code == 10000) {
                   Toast(res.message);
                   self.record_list = [];
@@ -187,8 +204,14 @@
       //調取易盾驗證
       incomeReceive() {
         if (this.init_data.status == 1) {
+          this.income_type = 1;
           this.captchaIns.popUp();
         }
+      },
+      incomeOnesReceive(id) {
+        this.single_id = id;
+        this.income_type = 2;
+        this.captchaIns.popUp();
       }
     }
 
@@ -272,6 +295,7 @@
         width: 100%;
         background: white;
         padding: .5rem 1rem;
+
         box-sizing: border-box;
         display: flex;
         margin-bottom: .5rem;
@@ -304,6 +328,7 @@
             display: flex;
             justify-content: space-between;
             > span {
+              font-size: 1rem;
               color: #999999;
               &:nth-child(1) {
                 color: #222;
@@ -312,7 +337,7 @@
             }
           }
           > .awards_record_list_r_b {
-            height: 3rem;
+            height: 4rem;
             display: flex;
             justify-content: space-between;
             > div {
@@ -325,10 +350,22 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                line-height: 2rem;
               }
               &.awards_record_list_r_b_r {
                 color: rgba(34, 34, 34, 1);
                 font-size: 1.3rem;
+                > .awards_record_list_r_b_r_btn {
+                  text-align: center;
+                  height: 2rem;
+                  background-color: #F7A003;
+                  color: #eee;
+                  padding: 0 1rem;
+                  display: inline-block;
+                  margin: auto;
+                  float: right;
+                  border-radius: 3px;
+                }
               }
             }
           }

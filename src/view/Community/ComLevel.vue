@@ -14,15 +14,15 @@
             <p>ID：{{levelDetail.user_id}}</p>
           </div>
           <div class="com_user_data_r_grade">
-            <p>{{$t('content_text.lang_list_24')}}：LV{{levelDetail.zhitui_level}}</p>
+            <p>{{$t('content_text.lang_list_24')}}：LV{{levelDetail.share_level}}</p>
             <p>{{$t('content_text.lang_list_26')}}：LV{{next_level.level}}</p>
           </div>
         </div>
       </div>
 
-      <!--会员数 票数-->
+      <!--总业绩-->
       <div class="com_number">
-        <div class="com_number_list">
+        <div class="com_number_list" v-if="false">
           <p>{{$t('content_text.lang_list_33')}}</p>
           <p><span :style="'width:'+ rote_1 +'%'"></span></p>
           <p>
@@ -34,11 +34,12 @@
             <span>{{next_level.valid_member_num}}{{$t('content_text.lang_list_34')}}</span>
           </p>
         </div>
+
         <div class="com_number_list">
           <p>{{$t('content_text.lang_list_127')}}</p>
           <p><span :style="'width:'+ rote_2 +'%'"></span></p>
           <p>
-            <span>LV{{levelDetail.zhitui_level}}</span>
+            <span>LV{{levelDetail.share_level}}</span>
             <span>LV{{next_level.level}}</span>
           </p>
           <p>
@@ -71,8 +72,9 @@
       this.getLevelDetail();
     },
     methods: {
+      //获取等级详情数据
       getLevelDetail() {
-        this.$post('/Money/IGKCommunityLevelDetail').then(res => {
+        this.$post('/Money/IGKShareLevelDetail').then(res => {
           if (res.code == 10000) {
             this.levelDetail = res.result;
             this.next_level = res.result.next_level;

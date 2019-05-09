@@ -32,9 +32,9 @@
                   <p>{{$t('content_text.lang_list_10')}}：{{item.user_mobile}}</p>
                   <p>ID：{{item.user_id}} <span>LV{{item.zhitui_level}}</span></p>
                 </div>
-                <div class="menber_box_log_top_r_b_r">
-                  <p>{{item.status_name}}</p>
-                </div>
+                <!--<div class="menber_box_log_top_r_b_r">-->
+                  <!--<p>{{item.status_name}}</p>-->
+                <!--</div>-->
               </div>
             </div>
           </div>
@@ -65,10 +65,13 @@
     data() {
       return {
         loadBol: true,
+        //我的社员列表
         myMemberList: [],
+        //社员数量
         member_num: this.$route.query.member_num,
         p: 1,
         ps: 10,
+        //无社员时页面显示
         myMember_noData_show: true,
       }
     },

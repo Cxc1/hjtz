@@ -62,10 +62,15 @@
     },
     data() {
       return {
+        //搜索结果显示隐藏
         resultBol: true,
+        //按钮文字
         resultTxt: this.$t('msgs.lang_list_14'),
+        //用户名
         userName: '',
+        //用户id
         userId: '',
+        //
         userData: [],
       }
     },

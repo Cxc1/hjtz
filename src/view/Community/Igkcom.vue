@@ -11,12 +11,11 @@
           </div>
           <div class="Igkcom_txt_content_r">
             <span>
-
             </span>
           </div>
         </div>
       </div>
-      <div class="Igkcom_btn " :class="{moanger :IGKInit== 2,gray:IGKInit == 3}" @click="goto_next">
+      <div class="Igkcom_btn " :class="{gray:IGKInit != 1}" @click="goto_next">
         {{btn_txt}}
       </div>
     </div>
@@ -26,7 +25,7 @@
           <span></span>
         </p>
         <p>{{$t('content_text.lang_list_90')}}</p>
-        <p>{{$t('content_text.lang_list_91')}}</p>
+        <!--<p>{{$t('content_text.lang_list_91')}}</p>-->
       </div>
       <h2 class="sh_title">{{$t('content_text.lang_list_92')}}</h2>
       <div class="menber_box_log">
@@ -68,11 +67,12 @@
     data() {
       return {
         //按钮显示的文字
-        btn_txt: '',
+        btn_txt: this.$t('btnTxt.lang_list_77'),
         //社区初始状态
         IGKInit: '',
-
+        //搜索用户信息
         ApplyInfo: [],
+        //什么事社区管理计划文案
         Igk_community: '',
       }
     },
@@ -80,13 +80,13 @@
       this.getMineIGKInit();
     },
     methods: {
+      //获取页面初始数据
       getMineIGKInit() {
         this.$loading.open();
         this.$post('/Money/mineIGKInit').then(res => {
           this.getIgk_community();
           if (res.code == 10000) {
             this.IGKInit = res.result.is_join;
-            this.btn_txt = this.IGKInit == 1 ? this.$t('btnTxt.lang_list_77') : this.IGKInit == 2 ? this.$t('btnTxt.lang_list_76') : '審核中';
             if (this.IGKInit == 3) {
               this.getCommunityApplyInfo();
             }
@@ -94,6 +94,7 @@
           this.$loading.close();
         })
       },
+      //什么事社区管理计划文案
       getIgk_community() {
         this.$post('/news/igk_community').then(res => {
           if (res.code == 10000) {
@@ -101,29 +102,31 @@
           }
         })
       },
+      //下一步，进入社区或是申请加入社区
       goto_next() {
-        this.IGKInit == 1 ? this.$router.push('/community') : this.$router.push('/applications')
+        this.IGKInit == 1 ? this.$router.push('/community') : Toast( this.$t('msgs.lang_list_132'))
       },
+      //搜索用户信息
       getCommunityApplyInfo() {
         this.$loading.open();
-        this.$post('/Money/getCommunityApplyInfo').then(res => {
+        this.$post('/Money/getCommunityInviteInfo').then(res => {
           if (res.code == 10000) {
-              this.ApplyInfo = res.result
+            this.ApplyInfo = res.result
           }
           this.$loading.close();
         })
       },
+      //确认撤销
       cancelApplica() {
         MessageBox({
           message: this.$t('msgs.lang_list_96'),
-          title: this.$t('msgs.lang_list_95'),
+          title: this.$t('content_text.lang_list_90'),
           $type: 'confirm',
           showCancelButton: true,
           confirmButtonText: this.$t('msgs.confirm'),
           cancelButtonText: this.$t('msgs.cancel'),
         }).then(action => {
-          console.log(MessageBox);
-          this.$post('/Money/cancelCommunityApply').then(res => {
+          this.$post('/Money/confirmCommunityInvite',{user_id:this.ApplyInfo.user_id}).then(res => {
             if (res.code == 10000) {
               Toast(res.message);
               let set_id = setTimeout(() => {

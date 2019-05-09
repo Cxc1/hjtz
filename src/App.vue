@@ -43,11 +43,13 @@
    .slide-right-leave-active {
     -webkit-transform: translate(100%, 0);
     transform: translate(100%, 0);
+    opacity: 0.5;
   }
 
   .slide-left-leave-active,
   .slide-right-enter {
     -webkit-transform: translate(-100%, 0);
     transform: translate(-100% 0);
+    opacity: 0.5;
   }
 </style>
